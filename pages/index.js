@@ -1,9 +1,11 @@
 
 import { Box, Button, Text, TextField, Image } from '@skynexui/components';
-
 import React from 'react';
+import { useRouter } from 'next/router'
+
 
 import appConfig from '../config.json';
+import { route } from 'next/dist/server/router';
 
 function GlobalStyle() {
     return (
@@ -67,6 +69,8 @@ export default function MainPage() {
     //const username = 'peas';
 
     const [username,  setUsername] = React.useState('Omarisoto');
+    const router = useRouter();
+     
     
     return (
         <>
@@ -100,6 +104,12 @@ export default function MainPage() {
                     {/* Form Container */}
                     <Box
                         as="form"
+                        onSubmit={function(event){
+                            event.preventDefault();
+                            router.push('/chat')
+                            
+                            console.log('ola submeter')
+                        }}
                         styleSheet={{
                             display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
                             width: { xs: '100%', sm: '50%' }, textAlign: 'center', marginBottom: '32px',
@@ -110,18 +120,7 @@ export default function MainPage() {
                             {appConfig.name}
                         </Text>
 
-                        {/* <input 
-                            type="text"
-                            value={username}
-                            onChange={function (event){
-                                console.log('usuario digitou em evento', event.target.value);
-
-                                const valor = event.target.value;
-                                setUsername(valor);
-                            }}
-                            
-                            /> */}
-
+                       
                         <TextField
                             fullWidth
                             value={username}
