@@ -41,7 +41,7 @@ function Title(props) {
 export default function MainPage() {
     //const username = 'peas';
 
-    const [username,  setUsername] = React.useState('Omarisoto');
+    const [username,  setUsername] = React.useState('sam');
     const router = useRouter();
      
     
@@ -58,7 +58,7 @@ export default function MainPage() {
                     backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
                 }}
             >
-                {/* Formulário */}
+                {/* From Container */}
                 <Box
                     styleSheet={{
                         display: 'flex',
@@ -74,12 +74,13 @@ export default function MainPage() {
                         backgroundColor: appConfig.theme.colors.neutrals[700],
                     }}
                 >
-                    {/* Form Container */}
+                    {/* Login Container */}
                     <Box
                         as="form"
                         onSubmit={function(event){
-                            event.preventDefault();
-                            router.push('/chat')
+                            console.log(event)
+                            // event.preventDefault();
+                            // router.push('/chat')
                             
                         }}
                         styleSheet={{
@@ -97,8 +98,6 @@ export default function MainPage() {
                             fullWidth
                             value={username}
                             onChange={function (event){
-                                console.log('usuario digitou em evento', event.target.value);
-
                                 const valor = event.target.value;
                                 setUsername(valor);
                             }}
@@ -126,6 +125,7 @@ export default function MainPage() {
                     
                     {/* Photo Area */}
                     <Box
+                        
                         styleSheet={{
                             display: 'flex',
                             flexDirection: 'column',
@@ -141,6 +141,7 @@ export default function MainPage() {
                         }}
                     >
                         <Image
+                            
                             styleSheet={{
                                 borderRadius: '50%',
                                 marginBottom: '16px',
