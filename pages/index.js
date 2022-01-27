@@ -79,8 +79,8 @@ export default function MainPage() {
                         as="form"
                         onSubmit={function(event){
                             console.log(event)
-                            // event.preventDefault();
-                            // router.push('/chat')
+                            event.preventDefault();
+                            router.push('/chat')
                             
                         }}
                         styleSheet={{
