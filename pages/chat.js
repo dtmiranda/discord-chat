@@ -1,9 +1,30 @@
 import { Box, Text, TextField, Image, Button } from '@skynexui/components';
+import react from 'react';
 import React from 'react';
 import appConfig from '../config.json';
 
 export default function ChatPage() {
-    
+
+    const [message, setMessage] = React.useState('');
+    const [messageList, setMessageList] = React.useState([]);
+
+
+    function handleNewMessage(newMessage) {
+        const message = {
+            id: MessageList.length,
+            from: 'dtmiranda',
+            text: newMessage,
+            date: Date
+        };
+
+        setMessageList([
+            message,
+            ...messageList,
+            
+        ])
+        setMessage('');
+    }
+
     return (
         <Box
             styleSheet={{
@@ -42,8 +63,17 @@ export default function ChatPage() {
                     }}
                 >
 
-                    <MessageList/>
-                   
+                    <MessageList message={messageList} />
+
+                    {/* lista de messagem:{messageList.map((currentMessage) =>{
+                         
+                        return(
+                            <li key={currentMessage.id}>
+                                {currentMessage.from}: { currentMessage.text}
+                            </li>
+                        )
+                    } )} */}
+
                     <Box
                         as="form"
                         styleSheet={{
@@ -52,7 +82,21 @@ export default function ChatPage() {
                         }}
                     >
                         <TextField
-                            
+                            value={message}
+                            onChange={(event) => {
+                                console.log('cabo vefes s ', event)
+                                const fieldValue = event.target.value;
+                                setMessage(fieldValue);
+                            }}
+
+                            onKeyPress={(event) => {
+                                if (event.key === 'Enter') {
+                                    event.preventDefault();
+                                    handleNewMessage(message);
+
+                                }
+                            }}
+
                             placeholder="Insira sua mensagem aqui..."
                             type="textarea"
                             styleSheet={{
@@ -92,8 +136,8 @@ function Header() {
 }
 
 function MessageList(props) {
-    console.log(props);
     return (
+
         <Box
             tag="ul"
             styleSheet={{
@@ -105,52 +149,59 @@ function MessageList(props) {
                 marginBottom: '16px',
             }}
         >
-           
-            <Text
-                
-                tag="li"
-                styleSheet={{
-                    borderRadius: '5px',
-                    padding: '6px',
-                    marginBottom: '12px',
-                    hover: {
-                        backgroundColor: appConfig.theme.colors.neutrals[700],
-                    }
-                }}
-            >
-                <Box
-                    styleSheet={{
-                        marginBottom: '8px',
-                    }}
-                >
-                    <Image
-                        styleSheet={{
-                            width: '20px',
-                            height: '20px',
-                            borderRadius: '50%',
-                            display: 'inline-block',
-                            marginRight: '8px',
-                        }}
-                        src={`https://github.com/vanessametonini.png`}
-                    />
-                    <Text tag="strong">
-                        
-                    </Text>
+
+            {props.message.map((message) => {
+                return (
                     <Text
+                        key={message.id}
+                        tag="li"
                         styleSheet={{
-                            fontSize: '10px',
-                            marginLeft: '8px',
-                            color: appConfig.theme.colors.neutrals[300],
+                            borderRadius: '5px',
+                            padding: '6px',
+                            marginBottom: '12px',
+                            hover: {
+                                backgroundColor: appConfig.theme.colors.neutrals[700],
+                            }
                         }}
-                        tag="span"
                     >
-                        {(new Date().toLocaleDateString())}
+
+                        <Box
+                            styleSheet={{
+                                marginBottom: '8px',
+                            }}
+                        >
+                            <Image
+                                styleSheet={{
+                                    width: '20px',
+                                    height: '20px',
+                                    borderRadius: '50%',
+                                    display: 'inline-block',
+                                    marginRight: '8px',
+                                }}
+                                src={`https://github.com/vanessametonini.png`}
+                            />
+                            <Text tag="strong">
+                                {message.from}
+                            </Text>
+                            <Text
+                                styleSheet={{
+                                    fontSize: '10px',
+                                    marginLeft: '8px',
+                                    color: appConfig.theme.colors.neutrals[300],
+                                }}
+                                tag="span"
+                            >
+                                {(new Date().toLocaleDateString())}
+                            </Text>
+                        </Box>
+                        {message.text}        
                     </Text>
-                </Box>
-                
-            </Text>
-        );
-          
+                );
+            })}
+
+
         </Box>
+
     )
+
 }
